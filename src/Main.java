@@ -1,21 +1,17 @@
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        manipulateDataImages("data/t10k-images.idx3-ubyte");
-
-        manipulateDataLabels("data/train-labels.idx1-ubyte");
-
+        List<Integer> labels = manipulateDataLabels("data/t10k-labels.idx1-ubyte");
+        List<Imagette> imagettes = manipulateDataImages("data/t10k-images.idx3-ubyte", labels);
+        Donnees donnees = new Donnees(imagettes);
+        // Utilisez l'objet donnees pour vos besoins
     }
 
-    private static void manipulateDataLabels(String dataset) throws IOException {
+    private static List<Integer> manipulateDataLabels(String dataset) throws IOException {
         DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
         //lire numero magique
@@ -32,16 +28,16 @@ public class Main {
             labels.add(dis.readUnsignedByte());
 
 
-
-        if (labels.get(0) == 5 && labels.get(numberOfElements-1) == 8)
-            System.out.println("Correct");
-        else System.out.println("Incorrect");
+        System.out.println(labels.get(0));
+        System.out.println(labels.get(numberOfElements-1));
 
         //fermer flux
         dis.close();
+
+        return labels;
     }
 
-    private static void manipulateDataImages(String dataset) throws IOException {
+    private static List<Imagette> manipulateDataImages(String dataset, List<Integer> labels) throws IOException {
         // open datainputstr
         DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
@@ -75,7 +71,7 @@ public class Main {
                     pixels[row][col] = dis.readUnsignedByte();
 
             //mettre dans imagette //ajoute tableau imagette
-            imagettes.add(new Imagette(pixels));
+            imagettes.add(new Imagette(pixels, labels.get(i)));
         }
 
         //retourner tab imagette
@@ -85,5 +81,6 @@ public class Main {
 
         //fermer flux
         dis.close();
+        return imagettes;
     }
 }

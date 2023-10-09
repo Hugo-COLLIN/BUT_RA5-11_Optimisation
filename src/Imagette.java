@@ -5,9 +5,15 @@ import java.io.IOException;
 
 class Imagette {
     int[][] pixels;
+    Integer etiquette;
 
     Imagette(int[][] pixels) {
         this.pixels = pixels;
+    }
+
+    Imagette(int[][] pixels, Integer etiquette) {
+        this.pixels = pixels;
+        this.etiquette = etiquette;
     }
 
     void saveToDisk(String filename) throws IOException {
