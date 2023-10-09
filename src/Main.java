@@ -4,13 +4,41 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        manipulateDataImages("data/t10k-images.idx3-ubyte");
+//        manipulateDataImages("data/t10k-images.idx3-ubyte");
 
+        manipulateDataLabels("data/train-labels.idx1-ubyte");
+
+    }
+
+    private static void manipulateDataLabels(String dataset) throws IOException {
+        DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
+
+        //lire numero magique
+        int magicNumber = dis.readInt();
+
+        //lire nb images
+        int numberOfElements = dis.readInt();
+
+
+        List<Integer> labels = new ArrayList<>();
+        //pour chaque imagette
+        for (int i = 0; i < numberOfElements; i++)
+            //creer imagette
+            labels.add(dis.readUnsignedByte());
+
+
+
+        if (labels.get(0) == 5 && labels.get(numberOfElements-1) == 8)
+            System.out.println("Correct");
+        else System.out.println("Incorrect");
+
+        //fermer flux
+        dis.close();
     }
 
     private static void manipulateDataImages(String dataset) throws IOException {
