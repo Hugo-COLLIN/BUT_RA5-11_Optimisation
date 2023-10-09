@@ -5,32 +5,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-class Imagette {
-    int[][] pixels;
 
-    Imagette(int[][] pixels) {
-        this.pixels = pixels;
-    }
-
-    void saveToDisk(String filename) throws IOException {
-        int width = this.pixels[0].length;
-        int height = this.pixels.length;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-
-        for (int row = 0; row < height; row ++)
-            for (int col = 0; col < width; col ++) {
-                int rgb = this.pixels[col][row];
-                image.setRGB(row, col, rgb*256*256+rgb*256+rgb);
-            }
-
-        ImageIO.write(image, "png", new File(filename + ".png"));
-    }
-}
 
 public class Main {
-    public static <List> void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
+        manipulateDataImages("data/t10k-images.idx3-ubyte");
+
+    }
+
+    private static void manipulateDataImages(String dataset) throws IOException {
         // open datainputstr
-        DataInputStream dis = new DataInputStream(new FileInputStream("data/t10k-images.idx3-ubyte"));
+        DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
         //lire numero magique
         int magicNumber = dis.readInt();
@@ -72,6 +57,5 @@ public class Main {
 
         //fermer flux
         dis.close();
-
     }
 }
