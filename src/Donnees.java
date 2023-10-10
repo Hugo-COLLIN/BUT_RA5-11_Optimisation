@@ -1,6 +1,6 @@
 import java.util.List;
 
-class Donnees {
+public class Donnees {
     List<Imagette> imagettes;
 
     Donnees(List<Imagette> imagettes) {

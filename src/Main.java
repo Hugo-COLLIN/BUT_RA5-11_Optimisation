@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<Integer> labels = manipulateDataLabels("data/t10k-labels.idx1-ubyte");
-        List<Imagette> imagettes = manipulateDataImages("data/t10k-images.idx3-ubyte", labels);
+        List<Integer> labels = manipulateDataLabels("data/train-labels.idx1-ubyte", 1000);
+        List<Imagette> imagettes = manipulateDataImages("data/train-images.idx3-ubyte", labels, 1000);
         Donnees donnees = new Donnees(imagettes);
         // Utilisez l'objet donnees pour vos besoins
     }
 
-    private static List<Integer> manipulateDataLabels(String dataset) throws IOException {
+    private static List<Integer> manipulateDataLabels(String dataset, int nbImages) throws IOException {
         DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
         //lire numero magique
@@ -23,13 +23,13 @@ public class Main {
 
         List<Integer> labels = new ArrayList<>();
         //pour chaque imagette
-        for (int i = 0; i < numberOfElements; i++)
+        for (int i = 0; i < nbImages; i++)
             //creer imagette
             labels.add(dis.readUnsignedByte());
 
 
         System.out.println(labels.get(0));
-        System.out.println(labels.get(numberOfElements-1));
+        System.out.println(labels.get(nbImages-1));
 
         //fermer flux
         dis.close();
@@ -37,7 +37,7 @@ public class Main {
         return labels;
     }
 
-    private static List<Imagette> manipulateDataImages(String dataset, List<Integer> labels) throws IOException {
+    private static List<Imagette> manipulateDataImages(String dataset, List<Integer> labels, int nbImages) throws IOException {
         // open datainputstr
         DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
@@ -59,7 +59,7 @@ public class Main {
 
         ArrayList<Imagette> imagettes = new ArrayList<>();
         //pour chaque imagette
-        for (int i = 0; i < numberOfImages; i++) {
+        for (int i = 0; i < nbImages; i++) {
             //creer imagette
             pixels = new int[numberOfRows][numberOfColumns];
 
@@ -76,7 +76,7 @@ public class Main {
 
         //retourner tab imagette
         imagettes.get(0).saveToDisk("saved/1");
-        imagettes.get(numberOfImages - 1).saveToDisk("saved/" + (numberOfImages - 1));
+        imagettes.get(nbImages - 1).saveToDisk("saved/" + (nbImages - 1));
 
 
         //fermer flux

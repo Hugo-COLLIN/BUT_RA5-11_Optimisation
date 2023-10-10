@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-class Imagette {
+public class Imagette {
     int[][] pixels;
     Integer etiquette;
 
