@@ -6,9 +6,31 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Integer> labels = manipulateDataLabels("data/train-labels.idx1-ubyte", 1000);
-        List<Imagette> imagettes = manipulateDataImages("data/train-images.idx3-ubyte", labels, 1000);
+        List<Imagette> imagettes = manipulateDataImages("data/train-images.idx3-ubyte", labels, 1000, true);
         Donnees donnees = new Donnees(imagettes);
-        // Utilisez l'objet donnees pour vos besoins
+
+        AlgoClassification plusProche = new PlusProche(donnees);
+
+
+        List<Integer> labelsTest = manipulateDataLabels("data/t10k-labels.idx1-ubyte", 1000);
+        List<Imagette> imagettesTest = manipulateDataImages("data/t10k-images.idx3-ubyte", labels, 1000, false);
+
+        compareTest(plusProche, imagettesTest, labelsTest);
+
+//        compareTest(plusProche);
+
+    }
+
+    private static void compareTest(AlgoClassification plusProche, List<Imagette> imagettesTest, List<Integer> labelsTest) {
+        int nbCorrect = 0;
+        for (int i = 0 ; i < 1000 ; i ++)
+        {
+            int prediction = plusProche.predire(imagettesTest.get(i));
+            if (prediction == labelsTest.get(i))
+                nbCorrect ++;
+        }
+
+        System.out.println("nbCorrect = " + nbCorrect);
     }
 
     private static List<Integer> manipulateDataLabels(String dataset, int nbImages) throws IOException {
@@ -37,7 +59,7 @@ public class Main {
         return labels;
     }
 
-    private static List<Imagette> manipulateDataImages(String dataset, List<Integer> labels, int nbImages) throws IOException {
+    private static List<Imagette> manipulateDataImages(String dataset, List<Integer> labels, int nbImages, boolean export) throws IOException {
         // open datainputstr
         DataInputStream dis = new DataInputStream(new FileInputStream(dataset));
 
@@ -74,9 +96,12 @@ public class Main {
             imagettes.add(new Imagette(pixels, labels.get(i)));
         }
 
-        //retourner tab imagette
-        imagettes.get(0).saveToDisk("saved/1");
-        imagettes.get(nbImages - 1).saveToDisk("saved/" + (nbImages - 1));
+        if (export)
+        {
+            //retourner tab imagette
+            imagettes.get(0).saveToDisk("saved/1");
+            imagettes.get(nbImages - 1).saveToDisk("saved/" + (nbImages - 1));
+        }
 
 
         //fermer flux
