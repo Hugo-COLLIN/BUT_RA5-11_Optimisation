@@ -2,8 +2,10 @@ package etudiant;
 
 import chargement.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class Analyse {
@@ -16,8 +18,20 @@ public class Analyse {
      * @return la liste des donnees reparties en sous groupe dans une map : valeur du critere -> donnees correspondantes
      */
     public Map<String, List<Data>> separer(List<Data> donnees, String critere) {
-        // TODO Afaire
-        throw new Error("TODO");
+        Map<String, List<Data>> res = new TreeMap<>();
+
+        for (Data d : donnees)
+        {
+            List<Data> critereDejaAjoute = res.get(d.getValeur(critere));
+            if (critereDejaAjoute != null)
+                res.get(d.getValeur(critere)).add(d);
+            else {
+                List<Data> newCritere = new ArrayList<>();
+                newCritere.add(d);
+                res.put(d.getValeur(critere), newCritere);
+            }
+        }
+        return res;
     }
 
 
