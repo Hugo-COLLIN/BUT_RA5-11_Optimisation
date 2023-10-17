@@ -41,7 +41,12 @@ public class Data {
     public String getValeur(String critere) {
         //TODO ??
         if (!this.attributs.containsKey(critere))
-            return"iconnu";
+            return"inconnu";
         return this.attributs.get(critere);
+    }
+
+    @Override
+    public String toString() {
+        return attributs.get("nom");
     }
 }
