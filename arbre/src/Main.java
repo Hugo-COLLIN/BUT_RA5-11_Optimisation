@@ -13,7 +13,10 @@ public class Main
         for (Data animal : dataAnimaux)
         {
             animal.ajouterAttribut("alea", String.valueOf(Math.random()));
-            System.out.println(animal.getValeur("alea"));
+//            System.out.println(animal.getValeur("alea"));
+            System.out.println(animal.getValeur("couleur"));
         }
+
+
     }
 }
