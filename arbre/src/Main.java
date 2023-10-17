@@ -20,8 +20,11 @@ public class Main
 
         Analyse a = new Analyse();
         Map<String, List<Data>> trie = a.separer(dataAnimaux, "couleur");
-
         System.out.println(trie);
+
+        Map<String, Double> distr = a.calculerDistribution(trie);
+        System.out.println(distr);
+
 
     }
 }
