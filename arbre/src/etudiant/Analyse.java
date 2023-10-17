@@ -42,9 +42,21 @@ public class Analyse {
      * @return Table : chaque valeur -> proba d'etre dans le groupe
      */
     public Map<String, Double> calculerDistribution(Map<String, List<Data>> groupes) {
-        // TODO Afaire
-        throw new Error("TODO");
+        Map<String, Double> res = new TreeMap<>();
+        int totalSize = groupes.values().stream().mapToInt(List::size).sum();
+
+        //pour chaque groupe
+        for (Map.Entry<String, List<Data>> mapEntry : groupes.entrySet())
+        {
+            // calculer la probabilité d'être dans le groupe
+            double proba = (double) mapEntry.getValue().size() / totalSize;
+            // ajouter la valeur à l'élément de clé spécifié pour la map
+            res.put(mapEntry.getKey(), proba);
+        }
+
+        return res;
     }
+
 
     /**
      * calcule l'entropie d'un groupe en fonction de la sortie predite
