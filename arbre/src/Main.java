@@ -25,6 +25,9 @@ public class Main
         Map<String, Double> distr = a.calculerDistribution(trie);
         System.out.println(distr);
 
+        double entropy = a.entropie(dataAnimaux, "nager");
+        System.out.println(entropy);
+
 
     }
 }

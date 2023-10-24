@@ -65,9 +65,21 @@ public class Analyse {
      * @param sortie nom du critère de sortie à predire
      * @return l'entropie selon la sortie
      */
-    double entropie(List<Data> groupe, String sortie) {
-        // TODO Afaire
-        throw new Error("TODO");
+    public double entropie(List<Data> groupe, String sortie) {
+        Map<String, List<Data>> separatedGroup = separer(groupe, sortie);
+
+        // Calculer la distribution
+        Map<String, Double> distribution = calculerDistribution(separatedGroup);
+
+        // Calculer l'entropie
+        double entropy = 0.0;
+        for (Double proba : distribution.values()) {
+            if (proba > 0) {
+                entropy += -proba * Math.log(proba);
+            }
+        }
+
+        return entropy;
     }
 
     /**
