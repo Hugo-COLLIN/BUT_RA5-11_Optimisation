@@ -66,6 +66,7 @@ public class Analyse {
      * @return l'entropie selon la sortie
      */
     public double entropie(List<Data> groupe, String sortie) {
+        // Séparer le groupe en sous-groupes selon le critère de sortie
         Map<String, List<Data>> separatedGroup = separer(groupe, sortie);
 
         // Calculer la distribution
@@ -90,9 +91,22 @@ public class Analyse {
      * @param sortie le critère final à prédire (pour calcul d'entropie)
      * @return l'entropie moyenne correspondant à séparer le groupe en sous-groupes.
      */
-    double entropieMoyenne(List<Data> groupe, String nomCritere, String sortie) {
-        // TODO Afaire
-        throw new Error("TODO");
+    public double entropieMoyenne(List<Data> groupe, String nomCritere, String sortie) {
+        // Séparer le groupe en sous-groupes selon le critère de sortie
+        Map<String, List<Data>> separatedGroup = separer(groupe, nomCritere);
+
+        // Calculer la distribution
+        Map<String, Double> distribution = calculerDistribution(separatedGroup);
+
+        // Calculer l'entropie moyenne
+        double averageEntropy = 0.0;
+        for (Map.Entry<String, List<Data>> entry : separatedGroup.entrySet()) {
+            double proba = distribution.get(entry.getKey());
+            double entropy = entropie(entry.getValue(), sortie);
+            averageEntropy += proba * entropy;
+        }
+
+        return averageEntropy;
     }
 
 
@@ -104,8 +118,25 @@ public class Analyse {
      * @return meilleur critere ou null si aucun critere n'améliore
      */
     public String getMeilleurCritere(List<Data> donnees, String[] entrees, String sortie) {
-        // TODO Afaire
-       throw new Error("TODO");
+        String meilleurCritere = null;
+        double maxGain = Double.NEGATIVE_INFINITY;
+
+        // Calculate the entropy of the input group
+        double entropieDonnees = entropie(donnees, sortie);
+
+        // For each criterion, calculate the entropy gain
+        for (String critere : entrees) {
+            double entropieMoyenne = entropieMoyenne(donnees, critere, sortie);
+            double gain = entropieDonnees - entropieMoyenne;
+
+            // If the gain is higher than the current maximum, update the maximum and the best criterion
+            if (gain > maxGain) {
+                maxGain = gain;
+                meilleurCritere = critere;
+            }
+        }
+
+        return meilleurCritere;
     }
 
 

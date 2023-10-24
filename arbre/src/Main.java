@@ -28,6 +28,16 @@ public class Main
         double entropy = a.entropie(dataAnimaux, "nager");
         System.out.println(entropy);
 
+        double entropy2 = a.entropie(dataAnimaux, "couleur");
+        System.out.println(entropy2);
+
+        double moyEntropie = a.entropieMoyenne(dataAnimaux, "nageoire", "nager");
+        System.out.println(moyEntropie);
+
+
+        String[] entrees = {"nageoire", "couleur"};
+        String meilleurCritere = a.getMeilleurCritere(dataAnimaux, entrees, "nager");
+        System.out.println(meilleurCritere);
 
     }
 }
