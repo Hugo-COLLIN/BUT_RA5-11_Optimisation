@@ -39,5 +39,10 @@ public class Main
         String meilleurCritere = a.getMeilleurCritere(dataAnimaux, entrees, "nager");
         System.out.println(meilleurCritere);
 
+        //manipuler la structure fournie pour construire le `
+        //premier ´etage de l’arbre. La s´eparation est cens´ee se faire sur le crit`ere nageoires - cf
+        //premier niveau de l’arbre 2.
+        List<Data> groupe = dataAnimaux;
+
     }
 }
