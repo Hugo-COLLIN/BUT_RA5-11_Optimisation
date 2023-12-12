@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<Integer> labels = manipulateDataLabels("data/train-labels.idx1-ubyte", 1000);
-        List<Imagette> imagettes = manipulateDataImages("data/train-images.idx3-ubyte", labels, 1000, true);
+        List<Integer> labels = manipulateDataLabels("KNN/data/train-labels.idx1-ubyte", 1000);
+        List<Imagette> imagettes = manipulateDataImages("KNN/data/train-images.idx3-ubyte", labels, 1000, true);
         Donnees donnees = new Donnees(imagettes);
 
         AlgoClassification plusProche = new PlusProche(donnees);
 
 
-        List<Integer> labelsTest = manipulateDataLabels("data/t10k-labels.idx1-ubyte", 1000);
-        List<Imagette> imagettesTest = manipulateDataImages("data/t10k-images.idx3-ubyte", labels, 1000, false);
+        List<Integer> labelsTest = manipulateDataLabels("KNN/data/t10k-labels.idx1-ubyte", 1000);
+        List<Imagette> imagettesTest = manipulateDataImages("KNN/data/t10k-images.idx3-ubyte", labels, 1000, false);
 
         compareTest(plusProche, imagettesTest, labelsTest);
 
